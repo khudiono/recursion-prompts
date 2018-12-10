@@ -6,32 +6,91 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
+
 var factorial = function(n) {
+  if(n < 0){
+    return null;
+  }
+
+  if(n === 0){
+    return 1;
+  }
+
+  return (n * factorial(n - 1));
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+  if(array.length < 1){
+    return 0;
+  }
+  return (array[0] + sum(array.slice(1)))  
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+  var flatArray = array.flat(2); // flatten array [1,2,3,4,5]
+  if(flatArray.length < 1){ //base case: array length
+    return 0;
+  }
+  return (flatArray[0] + arraySum(flatArray.slice(1))); //recursive: first index + arraySum(flattenedArray.slice(1)
 };
 
 // 4. Check if a number is even.
-var isEven = function(n) {
+var isEven = function(n){
+  //if n divided by 2 
+  // console.log(Math.floor(n / 2) / 2);
+  if (n === 1 || n === -1){
+    return false;
+  } else if(n === 0){
+    return true;
+  }
+  if(n < 0){ //if the number is a negative number add n++
+    n += 2
+  } else {//if the number is a positive number subtract
+    n -= 2
+  }
+  return isEven(n);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  if(n === 0){
+    return 0;
+  }
+  if(n < 0){ // if negative number, add 1 and add to sum 
+    return ((n + 1) + sumBelow(n + 1));
+  } else{ // if positive number, subtract 1 + recursve
+    return ((n - 1) + sumBelow(n - 1));
+    // 9 + sumBelow(9)
+    // 8 + sumBelow(8)
+    // 7 + sumBelow(7)
+    // 1 + sumBelow(1)
+    // 0 + sumbelow(0)
+  }
+
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+  //each iteration increase x
+  var arr = [];
+  if (x === y || x+1 === y || x-1 === y){
+    return arr;
+  }
+
+  if (x > y){
+    arr.push(--x);
+    return arr.concat(range(x--,y));
+  }else{
+    arr.push(++x);
+    return arr.concat(range(x++,y));
+  }
 };
 
 // 7. Compute the exponent of a number.
@@ -40,21 +99,69 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+  if (exp > 0){ // positive exponent
+    if(exp === 0){
+      return null;
+    }
+    return base * exponent(base, exp-1);
+  }
+  if(exp === 0){ // exponent is 0
+    return 1;
+  }
+  if (exp < 0){ //negative exponent
+    if(exp === 0){
+      return null;
+    }
+    // parseFloat((1.005).toFixed(15)) //==> 1.005
+    // console.log((1/base).toFixed(4), base);
+    return ((1/base) * exponent(base, exp+1));
+  }
 };
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
-// powerOfTwo(16); // true
+// powerOfTwo(16); // true 2^4 2*2*2*2
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  if(n === 1) {
+    return true;
+  }
+  if(n === 0 || n%2 !== 0){
+    return false;
+  }
+  return powerOfTwo(n/2);
 };
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+  // var arr =[];
+  // var length = string.length;
+  // var lastItem = string.slice(length-1);
+
+  // [h,e,l,l,o] //-> [o,l,l,e,h]
+
+  // arr.push(string);
+  if(string.length === 1){
+    return string;
+  }
+  // reverse('ello') + h
+  // reverse('llo') + e + h
+  return reverse(string.substring(1)) + string[0]
+  // return arr.concat(reverse(string.slice(0, string.length-1))).join('');
+
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  string = string.split('').join('').toLowerCase()
+  if(string.length === 1 || string.length === 0){
+    return true;
+  }
+  if(string[0] === string[string.length-1]){
+    return palindrome(string.slice(1, string.length-1));
+  }else{
+    return false;
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
