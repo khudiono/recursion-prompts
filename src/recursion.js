@@ -715,11 +715,11 @@ var mergeSort = function(array) {
 var clone = function(input) {
   if(Array.isArray(input)){
     var copy = [];
-  for (var i = 0; i < array.length; i++){
-    if(Array.isArray(array[i])){
-      copy.push(clone(array[i]))
+  for (var i = 0; i < input.length; i++){
+    if(Array.isArray(input[i])){
+      copy.push(clone(input[i]))
     }else{
-      copy.push(array[i])
+      copy.push(input[i])
     }
   }
   return copy
